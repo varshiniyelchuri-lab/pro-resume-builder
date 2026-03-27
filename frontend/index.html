@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-width=1.0">
+    <title>ProResume Builder</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf.js for downloading PDFs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo"><i class="fa-solid fa-file-signature"></i> ProResume</div>
+        <div class="nav-links">
+            <a href="#" data-route="home">Home</a>
+            <a href="#" data-route="dashboard" id="nav-dashboard" style="display:none;">My Resumes</a>
+            <a href="#" data-route="login" id="nav-login">Login</a>
+            <a href="#" data-route="register" id="nav-register">Register</a>
+            <a href="#" id="nav-logout" style="display:none;">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Main Content Container (SPA) -->
+    <main id="app">
+        <!-- Home Section -->
+        <section id="view-home" class="view active">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Build Your Professional Resume in Minutes</h1>
+                    <p>Create, edit, and download beautiful resumes with our easy-to-use builder. Stand out to employers and land your dream job.</p>
+                    <button class="btn-large btn-primary action-btn" data-action="go-to-builder">Create Resume Now</button>
+                </div>
+                <div class="hero-image">
+                    <!-- Placeholder or CSS shapes -->
+                    <div class="mockup">
+                        <div class="mockup-header"></div>
+                        <div class="mockup-body"></div>
+                        <div class="mockup-footer"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="features">
+                <h2>Why Choose ProResume?</h2>
+                <div class="feature-cards">
+                    <div class="card">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <h3>Easy to Use</h3>
+                        <p>Our intuitive builder lets you create a resume effortlessly.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <h3>Multiple Templates</h3>
+                        <p>Choose from professional, creative, and modern templates.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <h3>Export as PDF</h3>
+                        <p>Download your resume in high-quality PDF format instantly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Dashboard Section -->
+        <section id="view-dashboard" class="view">
+            <div class="dashboard-header">
+                <h2>My Resumes</h2>
+                <button class="btn-primary action-btn" data-action="go-to-builder"><i class="fa-solid fa-plus"></i> Create New</button>
+            </div>
+            <div id="resume-list" class="resume-grid">
+                <!-- Resumes injected here -->
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="view-login" class="view">
+            <div class="auth-container">
+                <div class="auth-box">
+                    <h2>Login</h2>
+                    <form id="login-form">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="login-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="login-password" required>
+                        </div>
+                        <button type="submit" class="btn-primary w-100 form-submit-btn">Login</button>
+                        <p class="auth-toggle">Don't have an account? <a href="#" data-route="register">Register here</a></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="view-register" class="view">
+            <div class="auth-container">
+                <div class="auth-box">
+                    <h2>Create an Account</h2>
+                    <form id="register-form">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="register-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="register-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="register-password" required minlength="6">
+                        </div>
+                        <button type="submit" class="btn-primary w-100 form-submit-btn">Register</button>
+                        <p class="auth-toggle">Already have an account? <a href="#" data-route="login">Login here</a></p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resume Builder Section -->
+        <section id="view-builder" class="view">
+            <div class="builder-layout">
+                <div class="builder-sidebar">
+                    <h3>Resume Details</h3>
+                    <form id="builder-form">
+                        
+                        <div class="accordion">
+                            <div class="accordion-item active">
+                                <div class="accordion-header">Personal Info</div>
+                                <div class="accordion-content">
+                                    <div class="form-group">
+                                        <label>Profile Photo</label>
+                                        <input type="file" id="b-photo" accept="image/*">
+                                    </div>
+                                    <div class="form-group"><label>Full Name</label><input type="text" id="b-fullname" data-preview="p-fullname" class="live-input"></div>
+                                    <div class="form-group"><label>Email</label><input type="email" id="b-email" data-preview="p-email" class="live-input"></div>
+                                    <div class="form-group"><label>Phone</label><input type="text" id="b-phone" data-preview="p-phone" class="live-input"></div>
+                                    <div class="form-group"><label>Address</label><input type="text" id="b-address" data-preview="p-address" class="live-input"></div>
+                                    <div class="form-group"><label>LinkedIn</label><input type="text" id="b-linkedin"></div>
+                                    <div class="form-group"><label>Portfolio</label><input type="text" id="b-portfolio"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <div class="accordion-header">Summary</div>
+                                <div class="accordion-content">
+                                    <div class="form-group"><textarea id="b-summary" rows="4" data-preview="p-summary" class="live-input"></textarea></div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">Experience</div>
+                                <div class="accordion-content">
+                                    <div id="experience-list"></div>
+                                    <button type="button" class="btn-secondary btn-sm" id="add-experience">+ Add Experience</button>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">Education</div>
+                                <div class="accordion-content">
+                                    <div id="education-list"></div>
+                                    <button type="button" class="btn-secondary btn-sm" id="add-education">+ Add Education</button>
+                                </div>
+                            </div>
+                            
+                            <div class="accordion-item">
+                                <div class="accordion-header">Skills</div>
+                                <div class="accordion-content">
+                                    <div class="form-group">
+                                        <label>Comma separated skills</label>
+                                        <input type="text" id="b-skills" placeholder="JavaScript, React, Node.js" data-preview="p-skills" class="live-input">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <div class="accordion-header">Settings</div>
+                                <div class="accordion-content">
+                                    <div class="form-group">
+                                        <label>Template</label>
+                                        <select id="b-template">
+                                            <option value="template1">Modern</option>
+                                            <option value="template2">Professional</option>
+                                            <option value="template3">Creative</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="builder-actions">
+                            <button type="button" class="btn-primary" id="save-resume">Save Resume</button>
+                            <button type="button" class="btn-secondary" id="download-pdf"><i class="fa-solid fa-download"></i> Download PDF</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="builder-preview">
+                    <!-- Realtime Preview Container -->
+                    <div id="resume-preview-container" class="template1">
+                        <div class="preview-header">
+                            <img id="p-photo" src="" alt="Profile Photo" style="display:none;" />
+                            <div class="header-text-content">
+                                <h1 id="p-fullname">John Doe</h1>
+                                <div class="contact-info">
+                                    <span id="p-email">john@example.com</span> | 
+                                    <span id="p-phone">+1 234 567 890</span> | 
+                                    <span id="p-address">New York, USA</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="preview-section">
+                            <h3 class="section-title">Summary</h3>
+                            <p id="p-summary">Experienced professional with a passion for web development.</p>
+                        </div>
+                        <div class="preview-section">
+                            <h3 class="section-title">Experience</h3>
+                            <div id="p-experience"></div>
+                        </div>
+                        <div class="preview-section">
+                            <h3 class="section-title">Education</h3>
+                            <div id="p-education"></div>
+                        </div>
+                        <div class="preview-section">
+                            <h3 class="section-title">Skills</h3>
+                            <div id="p-skills" class="skills-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 ProResume Builder. All rights reserved.</p>
+        <div class="social-links">
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
